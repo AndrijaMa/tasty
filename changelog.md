@@ -4,8 +4,8 @@ Change history for the OpenFlow SQL Server (Change Tracking) pipeline that lands
 `andrijasqlse` / database `test` into `RAW_DATA.AZURE_SQL` on Snowflake account
 `SFSEEUROPE-IE_DEMO99`.
 
-Canonical location: <https://github.com/andrijama/tasty> (`main`).
-Setup documentation: `README.md` in the `SQL_INGEST_DEMO` project directory (not published here).
+Canonical location: <https://github.com/andrijama/tasty> (`main`), alongside `README.md`.
+Setup documentation: `README.md`.
 
 Append-only, newest first. Every change gets an entry — including ones that failed or were
 reverted. No credentials, connection strings with credentials, or private keys in this file.
@@ -15,6 +15,19 @@ Entry fields: **When / Who / What / Why / Result**.
 ---
 
 ## 2026-08-20
+
+- **Who:** Andrija Marcic (`ANDRIJA`, GitHub `AndrijaMa`) — applied by Cortex Code.
+  **What:** Reversed the "README stays local" rule in `AGENTS.md`. `README.md` is now published to
+  `andrijama/tasty@main` alongside `changelog.md`, and **must be pushed every time the solution
+  changes** (parameters, table scope, driver, grants, network rules, source-side Change Tracking) in
+  the same session as the matching changelog entry. Flow JSON exports remain local — they leak the
+  source username. Added the secret-review-before-push reminder for both files and the
+  `gh auth switch -u AndrijaMa` note.
+  **Why:** The changelog alone does not describe the current state of the solution; a pushed
+  changelog with a stale or absent README is incomplete for anyone reading the repo.
+  **Result:** `AGENTS.md`, `README.md` and `changelog.md` updated; README published to the repo for
+  the first time. Checked for secrets — the README documents the source server, database and port
+  but no username or password.
 
 - **Who:** Andrija Marcic (`ANDRIJA`, GitHub `AndrijaMa`) — applied by Cortex Code.
   **What:** Added a `Change log` section to `AGENTS.md` requiring an append-only `changelog.md`
