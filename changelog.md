@@ -16,6 +16,20 @@ Entry fields: **When / Who / What / Why / Result**.
 
 ## 2026-08-20
 
+- **Who:** Andrija Marcic (`ANDRIJA`, GitHub `AndrijaMa`) — applied by Cortex Code via nipyapi
+  (profile `ie_demo99_azure`).
+  **What:** Set the connector merge cadence to every 15 minutes. Changed parameter
+  `Merge Task Schedule CRON` in the `SQLServer Ingestion Parameters` context
+  (`8c512dc0-fbfe-3a04-a832-dd3c14f02cc4`) from `0 * * * * ?` (every minute) to
+  `0 0/15 * * * ?`. This parameter feeds the `Merge Schedule` property of the
+  `Merge Journal to Destination` processor (`MultiDatabaseMergeSnowflakeJournalTable`,
+  `883fb705-6717-312b-8fbe-00eae27018e0`) in `SQLServer → Incremental Load`. Value is a NiFi/Quartz
+  CRON, not a Snowflake interval schedule.
+  **Why:** Reduce merge frequency from once a minute to once every 15 minutes.
+  **Result:** Applied live via `nipyapi.parameters.update_parameter_in_context` (referencing
+  processor briefly stopped/restarted). Merge processor back to RUNNING / VALID, 0 validation
+  errors. README updated (Runtime table + Parameter contexts section).
+
 - **Who:** Andrija Marcic (`ANDRIJA`, GitHub `AndrijaMa`) — applied by Cortex Code.
   **What:** Reversed the "README stays local" rule in `AGENTS.md`. `README.md` is now published to
   `andrijama/tasty@main` alongside `changelog.md`, and **must be pushed every time the solution
