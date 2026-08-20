@@ -52,6 +52,7 @@ source table → snapshot → `<table>_JOURNAL_<hash>_<gen>` → MERGE via `MYWH
 | Deployed version | `0.48.0-80ad996b` |
 | Process group name | `SQLServer` |
 | Process group id | `151d549e-01a0-1000-0000-0000240ac508` |
+| Merge cadence | Every 15 minutes — `Merge Task Schedule CRON` = `0 0/15 * * * ?` |
 
 This account is **Gen1** (the `OPENFLOW` SQL grammar is not enabled — `SHOW OPENFLOW CONNECTOR
 DEFINITIONS` fails), so the connector is managed through the NiFi API via `nipyapi`, not SQL.
@@ -229,6 +230,13 @@ Egress is already permitted — no change was needed:
 | `SQLServer Source Parameters` | `bf108151-8110-3a64-9b01-a2da69cf0202` |
 | `SQLServer Destination Parameters` | `9aba99fb-714a-3b59-b893-b868a2df1032` |
 | `SQLServer Ingestion Parameters` | `8c512dc0-fbfe-3a04-a832-dd3c14f02cc4` |
+
+The `SQLServer Ingestion Parameters` context holds **`Merge Task Schedule CRON`** — the Quartz CRON
+that drives the `Merge Journal to Destination` processor (`MultiDatabaseMergeSnowflakeJournalTable`,
+id `883fb705-6717-312b-8fbe-00eae27018e0`) in `SQLServer → Incremental Load` via its `Merge Schedule`
+property. Current value **`0 0/15 * * * ?`** (every 15 minutes). It is a NiFi/Quartz CRON, not a
+Snowflake interval schedule. To change the cadence, update this parameter (nipyapi picks it up live;
+the processor briefly stops and restarts).
 
 ### Parameter asset — JDBC driver
 
