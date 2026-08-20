@@ -16,6 +16,15 @@ Entry fields: **When / Who / What / Why / Result**.
 
 ## 2026-08-20
 
+- **When:** 2026-08-20T16:23+02:00
+  **Who:** Andrija Marcic (`ANDRIJA`, GitHub `AndrijaMa`) — applied by Cortex Code.
+  **What:** Changed the `AGENTS.md` changelog convention: the **When** field must now be a full
+  ISO 8601 timestamp with timezone offset (`YYYY-MM-DDTHH:MM±HH:MM`), not just the date — a timestamp
+  next to every change. Adopted the `When:` line format in this changelog going forward; existing
+  entries left as-is (append-only).
+  **Why:** Recording only the day loses the time-of-day ordering of multiple same-day changes.
+  **Result:** `AGENTS.md` and `changelog.md` updated; pushed to `andrijama/tasty@main`.
+
 - **Who:** Andrija Marcic (`ANDRIJA`, GitHub `AndrijaMa`) — applied by Cortex Code via nipyapi
   (profile `ie_demo99_azure`).
   **What:** Set the connector merge cadence to every 15 minutes. Changed parameter
