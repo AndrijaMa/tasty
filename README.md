@@ -14,9 +14,10 @@
 Change Tracking–driven replication from an Azure SQL Database into Snowflake using the OpenFlow
 **SQL Server** connector (not native CDC).
 
-Deployed and verified: **2026-08-18**. Last change: **2026-08-19** — scope switched from `SalesLT` to
-`Sales`, which matched nothing; the `SalesLT` destination schema was dropped by the connector as a
-result.
+Deployed and verified: **2026-08-18**. Last change: **2026-08-21** — the destination compute
+warehouse was changed from `MYWH` to `OPENFLOW_WH`. (Prior change **2026-08-19**: scope switched from
+`SalesLT` to `Sales`, which matched nothing; the `SalesLT` destination schema was dropped by the
+connector as a result — the pipeline is still idle in that state.)
 
 **Change history:** see [`changelog.md`](./changelog.md). This README and the changelog are both
 published to <https://github.com/andrijama/tasty> (`main`) — that is the canonical copy. Every
@@ -37,7 +38,7 @@ Snowflake  RAW_DATA.AZURE_SQL   — schema does not currently exist
 ```
 
 When the scope matches tables, the shape is:
-source table → snapshot → `<table>_JOURNAL_<hash>_<gen>` → MERGE via `MYWH` → destination table.
+source table → snapshot → `<table>_JOURNAL_<hash>_<gen>` → MERGE via `OPENFLOW_WH` → destination table.
 
 ## Runtime and connector
 
@@ -70,7 +71,7 @@ and is **not** what is deployed here; this setup uses the Change Tracking connec
 | Object Identifier Resolution | `CASE_INSENSITIVE` |
 | Snowflake Role | `OPENFLOW_ADMIN` |
 | Authentication Strategy | `SNOWFLAKE_MANAGED` |
-| Snowflake Warehouse | `MYWH` |
+| Snowflake Warehouse | `OPENFLOW_WH` |
 
 Notes:
 
