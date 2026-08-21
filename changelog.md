@@ -14,6 +14,32 @@ Entry fields: **When / Who / What / Why / Result**.
 
 ---
 
+## 2026-08-21
+
+- **When:** 2026-08-21T09:03+02:00
+  **Who:** Andrija Marcic (`ANDRIJA`, GitHub `AndrijaMa`) — applied by Cortex Code via nipyapi
+  (profile `ie_demo99_azure`).
+  **What:** Changed the destination compute warehouse from `MYWH` to `OPENFLOW_WH`. Updated parameter
+  `Snowflake Warehouse` in the `SQLServer Destination Parameters` context
+  (`9aba99fb-714a-3b59-b893-b868a2df1032`), process group `SQLServer`
+  (`151d549e-01a0-1000-0000-0000240ac508`), via
+  `nipyapi ci configure_inherited_params` (dry-run first, then applied). Also updated the pinned
+  value in `AGENTS.md` and `README.md`. Confirmed `OPENFLOW_WH` exists (STANDARD, X-Small,
+  auto-resume) and that `OPENFLOW_ADMIN` already holds `USAGE`/`OPERATE`/`MONITOR` on it — no grant
+  needed.
+  **Why:** User requested the switch off `MYWH` to the dedicated `OPENFLOW_WH` warehouse.
+  **Result:** Applied live — `parameters_updated: 1`, `contexts_modified: 1`. Re-export confirms
+  `Snowflake Warehouse = OPENFLOW_WH`. No stop/start required. No new warehouse- or
+  Snowflake-connection bulletins appeared. The connector remains in its **pre-existing idle state**
+  unrelated to this change: `Included Table Regex = test\.Sales\..*` still matches nothing,
+  `RAW_DATA.AZURE_SQL` does not exist, and the `Table State Service` controller
+  (`0e5a1fc2-555d-3868-bf67-a9ebf9d391a9`) is disabled — hence the 20 invalid processors / 5 "Create
+  Journal Table" bulletins, all carried over from 2026-08-19. Data-landing verification not possible
+  until the ingest scope is restored (see README → *Restoring the SalesLT pipeline*); the new
+  warehouse will take effect on the next snapshot/merge once tables are back in scope.
+
+---
+
 ## 2026-08-20
 
 - **When:** 2026-08-20T16:23+02:00
